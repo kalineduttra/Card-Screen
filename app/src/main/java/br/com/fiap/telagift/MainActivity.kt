@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -70,7 +71,7 @@ fun GiftScreen () {
     val pontosCupom: Int = 25
     var restoPontos by remember {
         mutableIntStateOf(value = 150)
-    }
+    } //categoria
 
     /* --- Tela  --- */
     Box(
@@ -98,10 +99,11 @@ fun GiftScreen () {
                 )
                 Text(
                     text = "Troque pontos por voucher ou cupons de desconto\n" +
-                            "nas suas lojas e serviços favoritos ",
+                            "nas suas lojas e serviços favoritos. Converta-os em vantagens\n" +
+                            "reais para aproveitar ao máximo suas compras.  ",
                     color = colorResource(id = R.color.white),
                     fontSize = 12.sp,
-                    textAlign = TextAlign.Left
+                    textAlign = TextAlign.Center
                 )
             }
 
@@ -128,11 +130,10 @@ fun GiftScreen () {
                         )
                     ) {
                         Text(
-                            text = "Voce possui",
+                            text = "Você possui",
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            //color = colorResource(id = R.color.pink_0),
                             textAlign = TextAlign.Center
                         )
                         Text(
@@ -143,58 +144,20 @@ fun GiftScreen () {
                             color = colorResource(id = R.color.green),
                             textAlign = TextAlign.Center
                         )
-                        Text(
-                            text = "Regras e diretrizes",
-                            modifier = Modifier.fillMaxWidth(),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
                     }
                 }
 
                 /* ---  Chamada Card do Cupom --- */
                 Spacer(modifier = Modifier.height(28.dp))
-                LazyColumn(){
-                    items(getAllCupom()){
+                LazyColumn() {
+                    items(getAllCupom()) {
                         CupomCard(cupom = it)
                     }
-                }
-
-
-                /* --- Card de lista imutavel dos Cupons --- */
-                Spacer(modifier = Modifier.height(28.dp))
-                Card(
-                    modifier = Modifier
-                        .height(200.dp)
-                        .fillMaxWidth()
-                        .offset(y = (-30).dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Button(
-                        onClick = {
-                            restoPontos = calcularPontos(
-                                qntdPontos = qntdPontos.toInt(),
-                                pontosCupom = pontosCupom.toInt()
-                            )
-                        }, modifier = Modifier
-                            .fillMaxWidth()
-                            .height(48.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(id = R.color.green)
-                        )
-                    )
-                    { Text(text = "Adquirir") }
                 }
             }
         }
     }
 }
-
-
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
