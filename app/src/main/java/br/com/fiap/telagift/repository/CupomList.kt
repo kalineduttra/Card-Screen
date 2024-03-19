@@ -2,6 +2,9 @@ package br.com.fiap.telagift.repository
 
 import br.com.fiap.telagift.model.Cupom
 
+/* esse arquivo implementa a função "getAllCupom e retorna uma lista
+cupom e a função "getCupomByEmpresa""*/
+
 fun getAllCupom(): List<Cupom> {
     return listOf(
         Cupom(id = 2401, desconto = "25%",

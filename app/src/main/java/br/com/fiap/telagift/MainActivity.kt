@@ -1,9 +1,9 @@
 package br.com.fiap.telagift
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -42,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.com.fiap.telagift.R.color
 import br.com.fiap.telagift.model.Cupom
 import br.com.fiap.telagift.repository.getAllCupom
 import br.com.fiap.telagift.ui.theme.TelaGiftTheme
@@ -64,36 +63,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun GiftScreen () {
-
-    /* --- variaveis para calcular --- */
+fun GiftScreen() {
+    /* --- variavel calcular --- */
     var qntdPontos: Int = 150
     val pontosCupom: Int = 25
-    var restoPontos by remember {
-        mutableIntStateOf(value = 150)
-    } //categoria
 
-    /* --- Tela  --- */
     Box(
         modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+    ){
+        Column(modifier = Modifier.fillMaxWidth()
         ) {
 
-            /* --- header --- */
+            /* ----- header ----- */
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp)
-                    .background(colorResource(id = R.color.pink_0))
+                    .background(colorResource(id = color.pink_0))
             ) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Text(
                     text = "Resgatar Recompensas",
-                    color = colorResource(id = R.color.white),
+                    color = colorResource(id = color.white),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -101,7 +93,7 @@ fun GiftScreen () {
                     text = "Troque pontos por voucher ou cupons de desconto\n" +
                             "nas suas lojas e serviços favoritos. Converta-os em vantagens\n" +
                             "reais para aproveitar ao máximo suas compras.  ",
-                    color = colorResource(id = R.color.white),
+                    color = colorResource(id = color.white),
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center
                 )
@@ -137,27 +129,77 @@ fun GiftScreen () {
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "$restoPontos pontos", //
+                            text = "$qntdPontos pontos",
                             modifier = Modifier.fillMaxWidth(),
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.green),
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            color = colorResource(id = R.color.green)
                         )
                     }
                 }
 
-                /* ---  Chamada Card do Cupom --- */
-                Spacer(modifier = Modifier.height(28.dp))
-                LazyColumn() {
+                /* -----  Chamada Lista Card do Cupom ----- */
+                Spacer(modifier = Modifier.height(16.dp))
+                LazyColumn(){
                     items(getAllCupom()) {
                         CupomCard(cupom = it)
                     }
                 }
             }
+        } 
+    }
+
+    //função da lista
+}@Composable
+fun CupomCard(cupom : Cupom) {
+    Card (modifier = Modifier.padding(bottom = 8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .weight(3f)
+            ) {
+                Text(
+                    text = cupom.empresa,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = cupom.categoria,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal
+                )
+            }
+            // >> obs: não consigo fazer calculo dos pontos <<
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
+                shape = RoundedCornerShape(5.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.green)
+                )
+            )
+            { Text(text = "Adquirir") }
         }
+        Text(
+            text = cupom.desconto.toString(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
+
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
