@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -138,9 +140,7 @@ fun GiftScreen() {
                         )
                     }
                 }
-
                 /* -----  Chamada Lista Card do Cupom ----- */
-                Spacer(modifier = Modifier.height(16.dp))
                 LazyColumn(){
                     items(getAllCupom()) {
                         CupomCard(cupom = it)
@@ -149,22 +149,22 @@ fun GiftScreen() {
             }
         } 
     }
+}
 
-    //função da lista
-}@Composable
+//função da lista
+@Composable
 fun CupomCard(cupom : Cupom) {
-    Card (modifier = Modifier.padding(bottom = 8.dp)) {
+    Card (modifier = Modifier.padding(bottom = 8.dp))
+    {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .weight(3f)
-            ) {
+                .weight(3f)) {
                 Text(
                     text = cupom.empresa,
                     fontSize = 20.sp,
@@ -175,28 +175,31 @@ fun CupomCard(cupom : Cupom) {
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal
                 )
-            }
-            // >> obs: não consigo fazer calculo dos pontos <<
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp),
-                shape = RoundedCornerShape(5.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(id = R.color.green)
+
+                // >> obs: não consigo fazer calculo dos pontos <<
+                Spacer(modifier = Modifier.height(5.dp))
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(35.dp),
+                    shape = RoundedCornerShape(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorResource(id = R.color.green)
+                    )
                 )
+                {
+                    Text(text = "Adquirir")
+                }
+            }
+            Text(
+                text = cupom.desconto,
+                modifier = Modifier
+                    .weight(1f).fillMaxWidth(),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
-            { Text(text = "Adquirir") }
         }
-        Text(
-            text = cupom.desconto.toString(),
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
     }
 }
 
