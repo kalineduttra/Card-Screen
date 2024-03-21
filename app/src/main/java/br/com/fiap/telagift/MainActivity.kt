@@ -66,6 +66,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GiftScreen() {
+
     /* --- variavel calcular --- */
     var qntdPontos: Int = 150
     val pontosCupom: Int = 25
@@ -101,14 +102,14 @@ fun GiftScreen() {
                 )
             }
 
-            /* --- Pontos Conta --- */
+            /* ----- Pontos Conta ----- */
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             ) {
 
-                /* --- Card de Pontos Usuário  --- */
+                /* ----- Card de Pontos Usuário  ----- */
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,6 +141,7 @@ fun GiftScreen() {
                         )
                     }
                 }
+
                 /* -----  Chamada Lista Card do Cupom ----- */
                 LazyColumn(){
                     items(getAllCupom()) {
@@ -151,7 +153,7 @@ fun GiftScreen() {
     }
 }
 
-//função da lista
+/* ----- função da lista ----- */
 @Composable
 fun CupomCard(cupom : Cupom) {
     Card (modifier = Modifier.padding(bottom = 8.dp))
@@ -176,7 +178,7 @@ fun CupomCard(cupom : Cupom) {
                     fontWeight = FontWeight.Normal
                 )
 
-                // >> obs: não consigo fazer calculo dos pontos <<
+                // >> obs: fazerb o teste de calculo com o emulador <<
                 Spacer(modifier = Modifier.height(5.dp))
                 Button(
                     onClick = { /*TODO*/ },

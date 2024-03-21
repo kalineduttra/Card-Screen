@@ -1,6 +1,6 @@
 package br.com.fiap.telagift.model
 
-//classe de dados
+/* ----- classe de dados ----- */
 data class Cupom(
     val id: Long = 0,
     val empresa: String,
